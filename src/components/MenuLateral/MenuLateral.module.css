@@ -1,0 +1,139 @@
+.layoutContainer {
+  display: flex;
+  height: 100vh;
+  background-color: var(--nude-bg); /* O fundo geral é o nude */
+  overflow: hidden;
+}
+
+/* --- SIDEBAR --- */
+.sidebar {
+  width: 320px;
+  /* Sidebar branca para contraste limpo e moderno */
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  padding: 32px 24px;
+  /* Sombra suave e rosada para "flutuar" sobre o fundo nude */
+  box-shadow: 4px 0 24px rgba(197, 157, 150, 0.15);
+  z-index: 10;
+}
+
+/* --- LOGO HEADER --- */
+.logoHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 48px;
+  padding-left: 8px;
+}
+
+.logoIcon {
+  color: var(--rose-gold);
+  filter: drop-shadow(0 2px 4px rgba(197, 157, 150, 0.3));
+}
+
+.brandName {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--wood-dark);
+  letter-spacing: 0.5px;
+}
+
+/* --- NAVEGAÇÃO --- */
+.navContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1; /* Ocupa o espaço disponível */
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  text-decoration: none;
+  /* Cor padrão dos itens inativos */
+  color: var(--text-secondary);
+  font-weight: 500;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  font-family: 'Lato', sans-serif;
+  position: relative; /* Necessário para o efeito de borda ativa */
+  border-left: 4px solid transparent; /* Prepara a borda para o estado ativo */
+}
+
+/* Ícones inativos com um tom sutil */
+.navIcon {
+  color: var(--wood-medium);
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+/* Hover suave */
+.navItem:hover:not(.active) {
+  background-color: var(--nude-bg);
+  color: var(--wood-dark);
+}
+.navItem:hover:not(.active) .navIcon {
+  color: var(--rose-gold);
+  opacity: 1;
+}
+
+/* --- ESTADO ATIVO (A mágica acontece aqui) --- */
+.active {
+  /* Fundo sutilmente rosado */
+
+  color: var(--wood-dark);
+  font-weight: 700;
+  /* Borda lateral marcante em Rose Gold */
+  border-left-color: var(--rose-gold);
+  box-shadow: 0 4px 12px rgba(197, 157, 150, 0.15);
+}
+
+.active .navIcon {
+  color: var(--rose-gold);
+  opacity: 1;
+  /* Um leve brilho no ícone ativo */
+  filter: drop-shadow(0 2px 3px rgba(197, 157, 150, 0.4));
+}
+
+/* --- FOOTER & LOGOUT --- */
+.footer {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--rose-light);
+}
+
+.logoutBtn {
+  width: 100%;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 18px;
+  background: none;
+  border: none;
+  /* Cor de destaque para ações de saída */
+  color: var(--wood-medium);
+  cursor: pointer;
+  font-size: 16px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.logoutBtn:hover {
+  background-color: #fff0ee;
+  color: #d32f2f; /* Vermelho sutil para logout */
+}
+
+/* --- ÁREA DE CONTEÚDO PRINCIPAL --- */
+.content {
+  flex: 1;
+
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}

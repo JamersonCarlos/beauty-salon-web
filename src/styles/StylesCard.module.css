@@ -1,0 +1,293 @@
+/* src/styles/StylesCard.module.css */
+
+/* --- OVERLAY & CARD --- */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(74, 59, 50, 0.4); /* --wood-dark com opacidade */
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.card {
+  background-color: var(--white, #FFFFFF);
+  width: 100%;
+  max-width: 550px; /* Padronizado pelo maior (Produto) */
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(74, 59, 50, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--rose-light, #e8d5d2);
+  animation: slideUp 0.3s ease-out;
+  max-height: 90vh; /* Evita que o modal estoure a tela verticalmente */
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- HEADER --- */
+.header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--rose-light, #e8d5d2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #FFFCFC;
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.iconTitle {
+  color: var(--wood-medium, #8d6e63);
+}
+
+.header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--wood-dark, #4a3b32);
+  margin: 0;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #BDBDBD;
+  transition: color 0.2s;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeBtn:hover {
+  color: var(--wood-dark, #4a3b32);
+}
+
+/* --- BODY (Scrollable) --- */
+.formBody {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto; /* Permite scroll se o form for grande */
+}
+
+/* --- INPUTS & LABELS --- */
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.inputGroup label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--wood-dark, #4a3b32);
+  font-family: 'Lato', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Caso tenha ícone no label */
+}
+
+/* Estilo base para todos os campos */
+.input, .select, .textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.95rem;
+  color: var(--text-primary, #4a3b32);
+  background-color: var(--white, #FFFFFF);
+  transition: all 0.2s ease;
+}
+
+.input:focus, .select:focus, .textarea:focus {
+  outline: none;
+  border-color: var(--rose-gold, #c59d96);
+  box-shadow: 0 0 0 3px rgba(197, 157, 150, 0.2);
+}
+
+.input::placeholder, .textarea::placeholder {
+  color: #BDBDBD;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Grid System (Linhas com 2 colunas) */
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* --- INPUTS COM ÍCONES --- */
+/* Wrapper relativo para posicionar o ícone absoluto dentro */
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.fieldIcon {
+  position: absolute;
+  left: 12px;
+  color: var(--wood-medium, #8d6e63);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Classe para adicionar padding no input quando tem ícone */
+.inputWithIcon {
+  padding-left: 38px !important;
+}
+
+/* --- SELECT CUSTOMIZADO --- */
+.selectWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 32px;
+  cursor: pointer;
+}
+
+.selectArrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--wood-medium, #8d6e63);
+  pointer-events: none;
+}
+
+/* --- TOGGLE SWITCH --- */
+.switchContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--nude-bg, #faf3f0);
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  margin-top: 4px;
+}
+
+.switchContainer:hover {
+  border-color: var(--rose-light, #e8d5d2);
+}
+
+.switchText {
+  display: flex;
+  flex-direction: column;
+}
+
+.switchLabel {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--wood-dark, #4a3b32);
+}
+
+.switchDesc {
+  font-size: 0.8rem;
+  color: var(--text-secondary, #9c8681);
+}
+
+.toggle {
+  width: 44px;
+  height: 24px;
+  background-color: #D7CCC8;
+  border-radius: 20px;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.toggleCircle {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.toggle.active {
+  background-color: var(--wood-dark, #4a3b32);
+}
+
+.toggle.active .toggleCircle {
+  transform: translateX(20px);
+}
+
+/* --- FOOTER --- */
+.footer {
+  padding: 20px 24px;
+  border-top: 1px solid var(--rose-light, #e8d5d2);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  background-color: #FAFAFA;
+}
+
+.btnCancel {
+  padding: 10px 20px;
+  background-color: var(--white, #FFFFFF);
+  border: 1px solid #D7CCC8;
+  border-radius: 8px;
+  color: var(--wood-medium, #8d6e63);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Lato', sans-serif;
+  transition: all 0.2s;
+}
+
+.btnCancel:hover {
+  background-color: #F5F5F5;
+  color: var(--wood-dark, #4a3b32);
+}
+
+.btnSave {
+  padding: 10px 24px;
+  background-color: var(--wood-medium, #8d6e63);
+  border: none;
+  border-radius: 8px;
+  color: var(--white, #FFFFFF);
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Lato', sans-serif;
+  box-shadow: 0 4px 12px rgba(74, 59, 50, 0.2);
+  transition: all 0.2s;
+}
+
+.btnSave:hover {
+  background-color: var(--wood-dark, #4a3b32);
+  transform: translateY(-1px);
+}

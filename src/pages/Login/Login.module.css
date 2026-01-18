@@ -1,0 +1,186 @@
+.loginWrapper {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  /* O caminho ../../ sobe duas pastas para achar a pasta assets */
+  background-image: url('../../assets/img/background.png');
+  background-size: cover; /* Garante que cubra a tela toda sem distorcer */
+  /* Foca no centro horizontal e no topo vertical */
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-color: var(--wood-dark);
+}
+
+/* Decoração com formas orgânicas suaves no fundo */
+.circleDecorationTop {
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(135deg, var(--rose-light) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.circleDecorationBottom {
+  position: absolute;
+  bottom: -150px;
+  left: -150px;
+  width: 500px;
+  height: 500px;
+  background: linear-gradient(45deg, var(--rose-gold) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0.2;
+}
+
+.loginContainer {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* --- Logo e Marca --- */
+.logoArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logoCircle {
+  width: 70px;
+  height: 70px;
+  background-color: var(--white);
+  border-radius: 50%; /* Bem redondo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(197, 157, 150, 0.25); /* Sombra rosada */
+  border: 1px solid var(--rose-light);
+  margin-bottom: 12px;
+}
+
+.brandName {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  color: var(--rose-light);
+  margin: 0;
+  font-style: italic; /* Charme extra */
+}
+
+/* --- Card --- */
+.loginCard {
+  background: rgba(255, 255, 255, 0.95); /* Leve transparência */
+  padding: 40px 32px;
+  border-radius: 20px; /* Bordas mais suaves/arredondadas */
+  width: 100%;
+  box-shadow: 0 15px 35px rgba(74, 59, 50, 0.08);
+  border: 1px solid #fff;
+  backdrop-filter: blur(10px);
+}
+
+.headerText h2 {
+  font-family: 'Playfair Display', serif;
+  color: var(--wood-dark);
+  margin: 0 0 5px 0;
+  font-size: 26px;
+  text-align: center;
+}
+
+.headerText p {
+  color: var(--text-secondary);
+  margin: 0 0 25px 0;
+  font-size: 14px;
+  text-align: center;
+  font-weight: 300;
+}
+
+/* --- Inputs --- */
+.inputGroup {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--wood-medium);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.input {
+  padding: 14px 16px;
+  border: 1px solid var(--rose-light);
+  border-radius: 12px; /* Input mais arredondado */
+  font-size: 16px;
+  color: var(--text-primary);
+  background-color: #fffcfc;
+  transition: all 0.3s ease;
+  font-family: 'Lato', sans-serif;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--rose-gold);
+  box-shadow: 0 0 0 4px rgba(197, 157, 150, 0.15); /* Glow Rose Gold */
+  background-color: #fff;
+}
+
+/* --- Botão --- */
+.loginBtn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--wood-dark) 0%, #5d4037 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  letter-spacing: 0.5px;
+}
+
+.loginBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(74, 59, 50, 0.25);
+  /* Brilho sutil no hover */
+  background: linear-gradient(135deg, #5d4037 0%, var(--wood-dark) 100%);
+}
+
+.forgotPass {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 5px;
+}
+
+.forgotPass a {
+  font-size: 13px;
+  color: var(--wood-medium);
+  text-decoration: none;
+}
+
+.forgotPass a:hover {
+  color: var(--rose-gold);
+}
+
+.footerText {
+  margin-top: 24px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}

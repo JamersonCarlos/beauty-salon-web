@@ -1,0 +1,400 @@
+/* Container Principal - Centraliza na tela mas define limites */
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 24px; /* Margem interna para não colar na borda */
+  font-family: 'Lato', sans-serif;
+  min-height: 100vh; /* Garante que o fundo nude preencha tudo */
+}
+
+/* --- HEADER (Título e Botão) --- */
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Centraliza verticalmente o botão com o texto */
+  margin-bottom: 32px;
+  flex-wrap: wrap; /* Permite quebrar linha no mobile */
+  gap: 16px;
+}
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem; /* Título maior e mais impactante */
+  color: var(--wood-dark);
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  margin: 4px 0 0 0;
+  font-size: 1rem;
+}
+
+/* Botão Novo Serviço */
+.btnNew {
+  background-color: var(--wood-medium);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(141, 110, 99, 0.2);
+  white-space: nowrap; /* Impede que o texto quebre */
+}
+
+.btnNew:hover {
+  background-color: var(--wood-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(141, 110, 99, 0.3);
+}
+
+/* --- BARRA DE FILTROS --- */
+.filterBar {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+/* Wrapper da Busca - O segredo está no flex: 1 */
+.searchWrapper {
+  flex: 1; /* Ocupa todo o espaço disponível restante */
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 250px; /* Tamanho mínimo para não esmagar */
+}
+
+.searchIcon {
+  position: absolute;
+  left: 16px;
+  color: #9e9e9e;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  height: 48px; /* Altura fixa para alinhar com o select */
+  padding: 0 16px 0 48px; /* Espaço para o ícone na esquerda */
+  border: 1px solid #e0e0e0; /* Borda sutil */
+  border-radius: 8px;
+  font-size: 1rem;
+  color: var(--text-primary);
+  background: white; /* Fundo branco para destacar do nude */
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--rose-gold);
+  box-shadow: 0 0 0 3px rgba(197, 157, 150, 0.2);
+}
+
+/* Wrapper do Select */
+.selectWrapper {
+  position: relative;
+  min-width: 220px; /* Largura fixa confortável para o select */
+}
+
+.filterIcon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--wood-medium);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.categorySelect {
+  width: 100%;
+  height: 48px; /* Mesma altura do input */
+  padding: 0 16px 0 48px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--wood-dark);
+  background: white;
+  cursor: pointer;
+  appearance: none; /* Remove seta padrão */
+  font-family: 'Lato', sans-serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.categorySelect:focus {
+  outline: none;
+  border-color: var(--rose-gold);
+  box-shadow: 0 0 0 3px rgba(197, 157, 150, 0.2);
+}
+
+/* Adiciona uma seta customizada via CSS no select (Opcional, mas fica bonito) */
+.selectWrapper::after {
+  content: '▼';
+  font-size: 0.7rem;
+  color: var(--wood-medium);
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* --- LISTAGEM E CATEGORIAS --- */
+.contentArea {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(141, 110, 99, 0.1); /* Linha divisória sutil */
+}
+
+.catTitleGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.catIcon {
+  color: var(--wood-medium);
+}
+
+.categoryHeader h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--wood-dark);
+  margin: 0;
+  font-weight: 700;
+}
+
+.badge {
+  background-color: white;
+  border: 1px solid var(--rose-light);
+  color: var(--wood-dark);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* --- GRID DE CARDS --- */
+.grid {
+  display: grid;
+  /* Responsivo: cards com min 300px, preenchendo o espaço */
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Garante altura igual na linha */
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(74, 59, 50, 0.1);
+  border-color: var(--rose-light);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.cardTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--wood-dark);
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+}
+
+.moreBtn {
+  background: none;
+  border: none;
+  color: #bdbdbd;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  margin-top: -4px;
+  margin-right: -4px;
+}
+
+.moreBtn:hover {
+  background-color: #f5f5f5;
+  color: var(--wood-dark);
+}
+
+.cardDesc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin: 0 0 24px 0;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+/* Rodapé do Card */
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Espalha preço e tempo */
+  padding-top: 16px;
+  border-top: 1px dashed #eeeeee;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.priceRow {
+  color: #388e3c; /* Verde mais elegante */
+  font-weight: 700;
+  font-size: 1.1rem;
+  background-color: #e8f5e9;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.commissionTag {
+  font-size: 0.75rem;
+  color: #9e9e9e;
+  margin-top: 12px;
+}
+
+/* Estados vazios e loading */
+.loadingText,
+.emptyState {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  padding: 60px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  border: 1px dashed var(--rose-light);
+}
+
+/* --- MOBILE --- */
+@media (max-width: 768px) {
+  .pageHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btnNew {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .filterBar {
+    flex-direction: column;
+  }
+
+  .selectWrapper,
+  .searchWrapper {
+    width: 100%;
+  }
+}
+
+.menuWrapper {
+  position: relative; /* Anchor for absolute positioning of dropdown */
+}
+
+.moreBtn {
+  background: none;
+  border: none;
+  color: #bdbdbd;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.moreBtn:hover {
+  background-color: #f5f5f5;
+  color: var(--wood-dark);
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 140px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e0e0e0;
+  z-index: 10;
+  overflow: hidden;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menuItem {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.2s;
+}
+
+.menuItem:hover {
+  background-color: #f5f5f5;
+}
+
+.menuDelete {
+  color: #d32f2f;
+  border-top: 1px solid #eeeeee;
+}
+
+.menuDelete:hover {
+  background-color: #ffebee;
+}
