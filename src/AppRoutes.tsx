@@ -6,6 +6,7 @@ import type { JSX } from 'react';
 import { Dashboard } from './pages/Dashboard';
 import { Servicos } from './pages/Servicos';
 import { Produtos } from './pages/Produtos/Produtos';
+import { Vendas } from './pages/Vendas';
 
 // Componente para proteger rotas
 const PrivateRoute = ({ children }: { children: JSX.Element }) => {
@@ -33,6 +34,7 @@ export function AppRoutes() {
         }
       >
         <Route index element={<Dashboard />} />
+        <Route path="vendas" element={<Vendas />} />
         <Route path="servicos" element={<Servicos />} />
         <Route path="produtos" element={<Produtos />} />
         <Route path="config" element={<h1>Configurações</h1>} />

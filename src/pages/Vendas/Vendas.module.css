@@ -1,0 +1,385 @@
+.container {
+  padding: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.headerBtn {
+  background-color: #bb8d6a; /* Cor similar ao marrom da imagem */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.headerBtn:hover {
+  opacity: 0.9;
+}
+
+/* Empty State Styles */
+.emptyStateContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.iconCircle {
+  background-color: #f7ebe6; /* Fundo rosado claro */
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.emptyStateTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+
+.emptyStateText {
+  color: #666;
+  margin-bottom: 24px;
+}
+
+.actionBtn {
+  background-color: #bb8d6a; /* Tom exato da imagem */
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 2px 5px rgba(187, 141, 106, 0.3);
+}
+
+/* Lista Simples (Caso tenha vendas) */
+.salesList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.saleCard {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 0; /* O padding será interno nas seções */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  transition: box-shadow 0.2s;
+}
+
+.saleCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* 1. Cabeçalho do Card (Data, ID e Status) */
+.cardHeader {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f5f5f5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dateInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.dateText {
+  font-weight: 600;
+  color: #333;
+}
+
+.idText {
+  font-size: 0.8rem;
+  color: #888;
+  font-family: monospace;
+}
+
+/* Badges de Status */
+.statusBadge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statusConcluida {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+
+.statusCancelada {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+}
+
+/* 2. Corpo do Card (Valores e Detalhes) */
+.cardBody {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.paymentInfo {
+  font-size: 0.9rem;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.valuesInfo {
+  text-align: right;
+}
+
+.totalValue {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.discountValue {
+  font-size: 0.85rem;
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+/* 3. Rodapé do Card (Botões) */
+.cardFooter {
+  padding: 12px 20px;
+  background-color: #fafafa;
+  border-top: 1px solid #f0f0f0;
+  border-radius: 0 0 12px 12px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btnAction {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+  color: #555;
+}
+
+.btnAction:hover {
+  background-color: #f0f0f0;
+  border-color: #ccc;
+}
+
+/* Estilo específico para Cancelar */
+.btnCancel {
+  color: #d32f2f;
+  border-color: #ffcdd2;
+  background-color: #fff;
+}
+
+.btnCancel:hover {
+  background-color: #ffebee;
+  border-color: #ef9a9a;
+}
+
+/* Estado Desabilitado */
+.btnDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+  border-color: #eee;
+  color: #999;
+}
+
+.paginationBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 16px;
+}
+
+.pageInfo {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.paginationBtn {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #555;
+}
+
+.paginationBtn:hover:not(:disabled) {
+  background-color: #f0f0f0;
+  border-color: #bb8d6a;
+  color: #bb8d6a;
+}
+
+.paginationBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background-color: #f9f9f9;
+}
+
+.filterBar {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filterHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #555;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.filterGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filterLabel {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #666;
+}
+
+.filterInput, .filterSelect {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background-color: white;
+  transition: border-color 0.2s;
+}
+
+.filterInput:focus, .filterSelect:focus {
+  border-color: #bb8d6a;
+  outline: none;
+}
+
+.filterActions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.btnSearch {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btnClear {
+  background-color: white;
+  color: #666;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btnSearch:hover { background-color: #555; }
+.btnClear:hover { background-color: #f0f0f0; }
+
+/* Ajuste responsivo para botão de ação */
+@media (max-width: 768px) {
+  .filterActions {
+    justify-content: stretch;
+    flex-direction: row;
+  }
+  .btnSearch, .btnClear {
+    flex: 1;
+    justify-content: center;
+  }
+}

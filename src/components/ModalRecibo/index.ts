@@ -1,0 +1,1 @@
+export { ModalRecibo } from './ModalRecibo';

@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   Sparkles,
   Package,
+  ShoppingBag,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import styles from './MenuLateral.module.css';
@@ -32,6 +33,16 @@ export function MenuLateral() {
           >
             <LayoutDashboard size={20} className={styles.navIcon} />
             <span>Dashboard</span>
+          </NavLink>
+
+          <NavLink
+            to="/vendas"
+            className={({ isActive }) =>
+              isActive ? `${styles.navItem} ${styles.active}` : styles.navItem
+            }
+          >
+            <ShoppingBag size={20} className={styles.navIcon} />
+            <span>Vendas</span>
           </NavLink>
 
           <NavLink
