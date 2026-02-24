@@ -1,9 +1,10 @@
 // src/services/api.ts
 
 import axios from 'axios';
+import { appConfig } from '../config/app_config';
 
 export const api = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: appConfig.apiBaseUrl,
   withCredentials: true, // Importante para os Cookies
   headers: {
     'Content-Type': 'application/json',

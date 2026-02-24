@@ -6,7 +6,9 @@ import {
   type ReactNode,
 } from 'react';
 import { api } from '../services/api';
+import axios from 'axios';
 import { jwtDecode } from 'jwt-decode'; // Importe a lib instalada
+import { appConfig } from '../config/app_config';
 
 // Tipagem baseada no seu Java JWT
 interface JwtPayload {
@@ -35,6 +37,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const axiosInstance = axios.create({
+    baseURL: appConfig.apiBaseUrl, // Altere para sua URL
+    timeout: 5000,
+    // Importante para cookies HttpOnly funcionarem
+    withCredentials: true,
+  });
 
   // Função para processar o Token JWT e definir estado
   const handleTokenProcessing = (token: string) => {
@@ -82,17 +91,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (username: string, pass: string) => {
     try {
-      // Enviando LoginRequest
-      const response = await api.post<LoginResponse>('/auth/login', {
-        username, // Ajustado para bater com seu LoginRequest Java
+      // No Axios, a tipagem é passada no método e o corpo é o segundo argumento
+      const response = await axiosInstance.post<LoginResponse>('/auth/login', {
+        username: username,
         password: pass,
       });
 
-      // O cookie já foi setado automaticamente pelo navegador aqui!
-      // Usamos o accessToken do corpo APENAS para atualizar o estado visual agora.
-      handleTokenProcessing(response.data.accessToken);
-    } catch (error) {
-      console.error('Erro ao logar', error);
+      // O Axios sempre encapsula o JSON de resposta dentro do atributo .data
+      const { accessToken } = response.data;
+
+      handleTokenProcessing(accessToken);
+    } catch (error: any) {
+      // O Axios costuma retornar erros dentro de error.response
+      console.error(
+        'Erro ao logar com Axios:',
+        error.response?.data || error.message
+      );
       throw error;
     }
   };
