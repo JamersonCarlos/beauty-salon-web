@@ -32,7 +32,7 @@ export interface ServicoResumo {
 
 export interface AgendaRequest {
   username: string;
-  servicoIds: number[];
+  servicos: number[];
   dataHoraInicio: string; // ISO 8601: YYYY-MM-DDTHH:mm:ss
   status: StatusAgenda;
   observacoes: string;

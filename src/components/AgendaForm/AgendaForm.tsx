@@ -19,7 +19,7 @@ import { StatusAgenda } from '../../types/agenda';
 
 const agendaSchema = z.object({
   username: z.string().min(1, 'Selecione um cliente'),
-  servicoIds: z.array(z.number()).min(1, 'Selecione pelo menos um serviço'),
+  servicos: z.array(z.number()).min(1, 'Selecione pelo menos um serviço'),
   dataHoraInicio: z.string().min(1, 'Informe a data e hora'),
   status: z.enum(['AGENDADO', 'FINALIZADO', 'CANCELADO']),
   observacoes: z.string(),
@@ -92,14 +92,14 @@ export function AgendaForm() {
     resolver: zodResolver(agendaSchema),
     defaultValues: {
       username: '',
-      servicoIds: [],
+      servicos: [],
       dataHoraInicio: '',
       status: 'AGENDADO',
       observacoes: '',
     },
   });
 
-  const selectedIds = watch('servicoIds');
+  const selectedIds = watch('servicos');
 
   // --- Carrega serviços e agenda (modo edição) ---
   useEffect(() => {
@@ -120,7 +120,7 @@ export function AgendaForm() {
           const agenda = await AgendaService.buscarAgendaPorId(Number(id));
           reset({
             username: agenda.user.username,
-            servicoIds: agenda.servicos.map((s) => s.id),
+            servicos: agenda.servicos.map((s) => s.id),
             dataHoraInicio: fromIso(agenda.dataHoraInicio),
             status: agenda.status as AgendaFormValues['status'],
             observacoes: agenda.observacoes ?? '',
@@ -196,13 +196,14 @@ export function AgendaForm() {
       const next = current.includes(servicoId)
         ? current.filter((x) => x !== servicoId)
         : [...current, servicoId];
-      setValue('servicoIds', next, { shouldValidate: true });
+      setValue('servicos', next, { shouldValidate: true });
     },
     [selectedIds, setValue]
   );
 
   // --- Submit ---
   const onSubmit = async (values: AgendaFormValues) => {
+    console.log('Submitting', values);
     const payload = {
       ...values,
       dataHoraInicio: toIso(values.dataHoraInicio),
@@ -339,7 +340,7 @@ export function AgendaForm() {
           <label className={styles.label}>Serviços *</label>
           <Controller
             control={control}
-            name="servicoIds"
+            name="servicos"
             render={() => (
               <div className={styles.checkboxGrid}>
                 {servicos.map((s) => {
@@ -369,8 +370,8 @@ export function AgendaForm() {
               </div>
             )}
           />
-          {errors.servicoIds && (
-            <p className={styles.error}>{errors.servicoIds.message}</p>
+          {errors.servicos && (
+            <p className={styles.error}>{errors.servicos.message}</p>
           )}
         </div>
 

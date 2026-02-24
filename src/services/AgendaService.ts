@@ -61,7 +61,7 @@ export const AgendaService = {
     page = 0,
     size = 10
   ): Promise<Page<User>> => {
-    const response = await api.get('/users/all', {
+    const response = await api.get('/user/all', {
       params: {
         ...(username ? { username } : {}),
         ...(name ? { name } : {}),
