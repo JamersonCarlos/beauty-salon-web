@@ -1,0 +1,1 @@
+export { Agendamentos } from './Agendamentos';

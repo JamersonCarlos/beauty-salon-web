@@ -9,6 +9,7 @@ import {
   Package,
   ShoppingBag,
   ShieldCheck,
+  CalendarDays,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import styles from './MenuLateral.module.css';
@@ -64,6 +65,16 @@ export function MenuLateral() {
           >
             <Package size={20} className={styles.navIcon} />
             <span>Produtos</span>
+          </NavLink>
+
+          <NavLink
+            to="/agendamentos"
+            className={({ isActive }) =>
+              isActive ? `${styles.navItem} ${styles.active}` : styles.navItem
+            }
+          >
+            <CalendarDays size={20} className={styles.navIcon} />
+            <span>Agendamentos</span>
           </NavLink>
 
           <NavLink

@@ -1,0 +1,317 @@
+/* src/components/AgendaForm/AgendaForm.module.css */
+
+/* ---- Layout ---- */
+.container {
+  padding: 32px 40px;
+  max-width: 720px;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 48px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* ---- Header ---- */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.btnBack {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--rose-light);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.btnBack:hover {
+  border-color: var(--rose-gold);
+  color: var(--rose-gold);
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.titleIcon {
+  color: var(--rose-gold);
+}
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* ---- Form ---- */
+.form {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 2px 16px rgba(197, 157, 150, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ---- Campo genérico ---- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+
+.label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+/* ---- Inputs ---- */
+.input,
+.select,
+.textarea {
+  padding: 10px 14px;
+  border: 1.5px solid var(--rose-light);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--text-primary);
+  font-size: 0.93rem;
+  font-family: 'Lato', sans-serif;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  outline: none;
+  width: 100%;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: var(--rose-gold);
+  box-shadow: 0 0 0 3px rgba(197, 157, 150, 0.18);
+}
+
+.inputError {
+  border-color: #b82e28 !important;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239c8681' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+  cursor: pointer;
+}
+
+/* ---- Busca de usuário ---- */
+.searchWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  color: var(--text-secondary);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.searchInput {
+  padding-left: 36px;
+}
+
+.inputLoader {
+  position: absolute;
+  right: 12px;
+  color: var(--rose-gold);
+  animation: spin 0.8s linear infinite;
+}
+
+/* ---- Dropdown ---- */
+.dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--white);
+  border: 1.5px solid var(--rose-light);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(74, 59, 50, 0.12);
+  padding: 6px 0;
+  margin: 0;
+  list-style: none;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.dropdownItem:hover {
+  background: var(--nude-bg);
+}
+
+.dropdownName {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.dropdownUsername {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+/* ---- Checkboxes de serviço ---- */
+.checkboxGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.checkboxHidden {
+  display: none;
+}
+
+.checkboxCard {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--rose-light);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--white);
+}
+
+.checkboxCard:hover {
+  border-color: var(--rose-gold);
+  background: var(--nude-bg);
+}
+
+.checkboxCardChecked {
+  border-color: var(--rose-gold);
+  background: #fdf0ee;
+}
+
+.checkboxName {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.checkboxMeta {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* ---- Erro ---- */
+.error {
+  font-size: 0.78rem;
+  color: #b82e28;
+  margin: 0;
+}
+
+/* ---- Footer ---- */
+.formFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 8px;
+  border-top: 1px solid var(--rose-light);
+}
+
+.btnCancel {
+  padding: 10px 24px;
+  border: 1.5px solid var(--rose-light);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-family: 'Lato', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btnCancel:hover:not(:disabled) {
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
+}
+
+.btnSave {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 28px;
+  background: var(--wood-dark);
+  border: none;
+  border-radius: 8px;
+  color: var(--white);
+  font-size: 0.9rem;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btnSave:hover:not(:disabled) {
+  background: var(--wood-medium);
+}
+
+.btnSave:disabled,
+.btnCancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---- Spinner ---- */
+.spinner {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

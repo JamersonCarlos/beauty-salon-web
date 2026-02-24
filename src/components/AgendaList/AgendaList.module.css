@@ -1,0 +1,284 @@
+/* src/components/AgendaList/AgendaList.module.css */
+
+.container {
+  padding: 32px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ---- Header ---- */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.titleIcon {
+  color: var(--rose-gold);
+}
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ---- Filtros ---- */
+.filtros {
+  display: flex;
+  gap: 6px;
+}
+
+.filtroBtn {
+  padding: 8px 16px;
+  border: 1.5px solid var(--rose-light);
+  border-radius: 20px;
+  background: var(--white);
+  color: var(--text-secondary);
+  font-size: 0.83rem;
+  font-family: 'Lato', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filtroBtn:hover {
+  border-color: var(--rose-gold);
+  color: var(--rose-gold);
+}
+
+.filtroAtivo {
+  background: var(--rose-gold);
+  border-color: var(--rose-gold);
+  color: var(--white);
+  font-weight: 700;
+}
+
+.filtroAtivo:hover {
+  color: var(--white);
+}
+
+/* ---- Botão Novo ---- */
+.btnNovo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  background: var(--wood-dark);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btnNovo:hover {
+  background: var(--wood-medium);
+}
+
+/* ---- Tabela ---- */
+.tableWrapper {
+  background: var(--white);
+  border-radius: 14px;
+  box-shadow: 0 2px 16px rgba(197, 157, 150, 0.12);
+  overflow: auto;
+}
+
+.feedback {
+  padding: 48px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead tr {
+  border-bottom: 1.5px solid var(--rose-light);
+}
+
+.table th {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 14px 18px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  vertical-align: middle;
+  border-bottom: 1px solid #f4ece9;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover td {
+  background: #fdf7f5;
+}
+
+/* ---- Células especiais ---- */
+.clienteName {
+  display: block;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.clienteUsername {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.servicosList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.servicoTag {
+  background: var(--nude-bg);
+  border: 1px solid var(--rose-light);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* ---- Status Badge ---- */
+.statusBadge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.statusAgendado {
+  background: #e8f4fd;
+  color: #1a6fa8;
+}
+
+.statusFinalizado {
+  background: #e6f9f0;
+  color: #1d7a4e;
+}
+
+.statusCancelado {
+  background: #fdecea;
+  color: #b82e28;
+}
+
+/* ---- Ações por linha ---- */
+.rowActions {
+  display: flex;
+  gap: 8px;
+}
+
+.btnEdit,
+.btnDelete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btnEdit {
+  background: var(--rose-light);
+  color: var(--wood-dark);
+}
+
+.btnEdit:hover {
+  background: var(--rose-gold);
+  color: var(--white);
+}
+
+.btnDelete {
+  background: #fdecea;
+  color: #b82e28;
+}
+
+.btnDelete:hover {
+  background: #b82e28;
+  color: var(--white);
+}
+
+.btnDelete:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---- Paginação ---- */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.pageBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--rose-light);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pageBtn:hover:not(:disabled) {
+  border-color: var(--rose-gold);
+  color: var(--rose-gold);
+}
+
+.pageBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pageInfo {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
