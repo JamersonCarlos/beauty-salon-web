@@ -13,10 +13,14 @@ import {
   Smile,
   Pencil,
   Trash2,
+  ChevronLeft,
+  ChevronRight,
+  X,
 } from 'lucide-react';
 import {
   ServicoService,
   type ServicoRequestDTO,
+  type ServicoFiltroDTO,
 } from '../../services/ServicoService';
 import { Servico } from '../../models/Servico';
 import { CardServico } from '../../components/CardServico';
@@ -47,7 +51,22 @@ export function Servicos() {
   );
   const [menuOpenId, setMenuOpenId] = useState<number | null>(null);
 
-  // Filters
+  // Paginação
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [pageSize, setPageSize] = useState(20);
+  const [totalElements, setTotalElements] = useState(0);
+
+  // Filtros
+  const [filtros, setFiltros] = useState<ServicoFiltroDTO>({
+    nome: '',
+    categoria: undefined,
+    ativo: undefined,
+    precoMin: undefined,
+    precoMax: undefined,
+  });
+
+  // For filters UI
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('TODAS');
 
@@ -55,7 +74,7 @@ export function Servicos() {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    carregarServicos();
+    carregarServicos(page);
 
     // Close menu on click outside
     const handleClickOutside = (event: MouseEvent) => {
@@ -65,18 +84,58 @@ export function Servicos() {
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [page, pageSize]);
 
-  const carregarServicos = async () => {
+  const carregarServicos = async (pageParam: number = page) => {
     try {
       setLoading(true);
-      const data = await ServicoService.listarTodos();
-      setServicos(data);
+      const filtroPayload: ServicoFiltroDTO = {
+        ...filtros,
+        page: pageParam,
+        size: pageSize,
+      };
+      const data = await ServicoService.listarTodos(filtroPayload);
+      setServicos(data.content);
+      setTotalPages(data.totalPages);
+      setTotalElements(data.totalElements);
     } catch (error) {
       console.error('Erro ao carregar serviços', error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFiltros((prev) => ({
+      ...prev,
+      [name]: value === '' ? undefined : value,
+    }));
+  };
+
+  const handleBuscar = () => {
+    setPage(0);
+    carregarServicos(0);
+  };
+
+  const handleLimpar = () => {
+    setFiltros({
+      nome: '',
+      categoria: undefined,
+      ativo: undefined,
+      precoMin: undefined,
+      precoMax: undefined,
+    });
+    setSearchTerm('');
+    setSelectedCategory('TODAS');
+    setPage(0);
+    ServicoService.listarTodos({ page: 0, size: pageSize }).then((data) => {
+      setServicos(data.content);
+      setTotalPages(data.totalPages);
+      setTotalElements(data.totalElements);
+    });
   };
 
   // --- ACTIONS ---
@@ -109,7 +168,7 @@ export function Servicos() {
       try {
         await ServicoService.excluir(id);
         setMenuOpenId(null);
-        carregarServicos(); // Refresh list
+        carregarServicos(page); // Refresh list
       } catch (error) {
         alert('Erro ao excluir serviço.');
       }
@@ -135,7 +194,7 @@ export function Servicos() {
         await ServicoService.criar(dto);
       }
 
-      await carregarServicos();
+      await carregarServicos(page);
       setIsModalOpen(false);
     } catch (error) {
       alert('Erro ao salvar serviço.');
@@ -144,14 +203,7 @@ export function Servicos() {
 
   // --- FILTER & RENDER LOGIC ---
 
-  const filteredList = servicos.filter((s) => {
-    const matchesSearch = s.nome
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      selectedCategory === 'TODAS' || s.categoriaServico === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  const filteredList = servicos; // Já filtrado pelo backend
 
   const groupedServices = filteredList.reduce(
     (acc, servico) => {
@@ -176,7 +228,7 @@ export function Servicos() {
         <div>
           <h1 className={styles.title}>Serviços</h1>
           <p className={styles.subtitle}>
-            {servicos.length} serviços cadastrados
+            {totalElements} serviços cadastrados
           </p>
         </div>
         <button className={styles.btnNew} onClick={handleOpenCreateModal}>
@@ -185,35 +237,87 @@ export function Servicos() {
         </button>
       </div>
 
+      {/* Filtros Expandidos */}
       <div className={styles.filterBar}>
         <div className={styles.searchWrapper}>
           <Search className={styles.searchIcon} size={20} />
           <input
             type="text"
+            name="nome"
             placeholder="Buscar serviços..."
             className={styles.searchInput}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            value={filtros.nome || ''}
+            onChange={handleInputChange}
           />
         </div>
 
-        <div className={styles.selectWrapper}>
-          <Filter className={styles.filterIcon} size={18} />
-          <select
-            className={styles.categorySelect}
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-          >
-            <option value="TODAS">Todas categorias</option>
-            {Object.keys(CategoryMap).map(
-              (key) =>
-                key !== 'DEFAULT' && (
-                  <option key={key} value={key}>
-                    {CategoryMap[key].label}
-                  </option>
-                )
-            )}
-          </select>
+        <div className={styles.filterGrid}>
+          <div className={styles.filterGroup}>
+            <label className={styles.filterLabel}>Categoria</label>
+            <select
+              name="categoria"
+              className={styles.filterSelect}
+              value={filtros.categoria || ''}
+              onChange={handleInputChange}
+            >
+              <option value="">Todas</option>
+              {Object.keys(CategoryMap).map(
+                (key) =>
+                  key !== 'DEFAULT' && (
+                    <option key={key} value={key}>
+                      {CategoryMap[key].label}
+                    </option>
+                  )
+              )}
+            </select>
+          </div>
+
+          <div className={styles.filterGroup}>
+            <label className={styles.filterLabel}>Status</label>
+            <select
+              name="ativo"
+              className={styles.filterSelect}
+              value={filtros.ativo?.toString() || ''}
+              onChange={handleInputChange}
+            >
+              <option value="">Todos</option>
+              <option value="true">Ativo</option>
+              <option value="false">Inativo</option>
+            </select>
+          </div>
+
+          <div className={styles.filterGroup}>
+            <label className={styles.filterLabel}>Preço Min</label>
+            <input
+              type="number"
+              name="precoMin"
+              placeholder="0,00"
+              className={styles.filterInput}
+              value={filtros.precoMin || ''}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className={styles.filterGroup}>
+            <label className={styles.filterLabel}>Preço Max</label>
+            <input
+              type="number"
+              name="precoMax"
+              placeholder="0,00"
+              className={styles.filterInput}
+              value={filtros.precoMax || ''}
+              onChange={handleInputChange}
+            />
+          </div>
+        </div>
+
+        <div className={styles.filterActions}>
+          <button className={styles.btnClear} onClick={handleLimpar}>
+            <X size={16} /> Limpar
+          </button>
+          <button className={styles.btnSearch} onClick={handleBuscar}>
+            <Search size={16} /> Buscar
+          </button>
         </div>
       </div>
 
@@ -301,6 +405,50 @@ export function Servicos() {
           {filteredList.length === 0 && (
             <div className={styles.emptyState}>Nenhum serviço encontrado.</div>
           )}
+        </div>
+      )}
+
+      {/* Paginação */}
+      {!loading && filteredList.length > 0 && (
+        <div className={styles.paginationBar}>
+          <div className={styles.paginationControls}>
+            <button
+              className={styles.paginationBtn}
+              onClick={() => setPage((p) => Math.max(0, p - 1))}
+              disabled={page === 0}
+              title="Página Anterior"
+            >
+              <ChevronLeft size={20} />
+            </button>
+
+            <span className={styles.pageInfo}>
+              Página {page + 1} de {totalPages || 1}
+            </span>
+
+            <button
+              className={styles.paginationBtn}
+              onClick={() => setPage((p) => p + 1)}
+              disabled={page >= totalPages - 1}
+              title="Próxima Página"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+
+          <div className={styles.pageSizeSelector}>
+            <label>Itens por página:</label>
+            <select
+              value={pageSize}
+              onChange={(e) => {
+                setPageSize(Number(e.target.value));
+                setPage(0);
+              }}
+            >
+              <option value={10}>10</option>
+              <option value={20}>20</option>
+              <option value={50}>50</option>
+            </select>
+          </div>
         </div>
       )}
 

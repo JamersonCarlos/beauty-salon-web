@@ -1,14 +1,26 @@
 import { useEffect, useState } from 'react';
-import { Plus, Search, Package, AlertTriangle, Trash2 } from 'lucide-react';
+import {
+  Plus,
+  Search,
+  Package,
+  AlertTriangle,
+  Trash2,
+  ChevronLeft,
+  ChevronRight,
+  Filter,
+  X,
+} from 'lucide-react';
 import {
   ProdutoService,
   type ProdutoRequestDTO,
+  type ProdutoFiltroDTO,
 } from '../../services/ProdutoService';
 import { Produto } from '../../models/Produto';
 import {
   CardProduto,
   type ProdutoFormData,
 } from '../../components/CardProduto';
+import { CategoriaProduto } from '../../enums/CategoriaProduto';
 import styles from './Produtos.module.css';
 
 export function Produtos() {
@@ -18,17 +30,38 @@ export function Produtos() {
   const [editingProduto, setEditingProduto] = useState<ProdutoFormData | null>(
     null
   );
-  const [searchTerm, setSearchTerm] = useState('');
+
+  // Paginação
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [pageSize, setPageSize] = useState(20);
+  const [totalElements, setTotalElements] = useState(0);
+
+  // Filtros
+  const [filtros, setFiltros] = useState<ProdutoFiltroDTO>({
+    nome: '',
+    categoria: undefined,
+    disponivel: undefined,
+    precoMin: undefined,
+    precoMax: undefined,
+  });
 
   useEffect(() => {
-    carregarProdutos();
-  }, []);
+    carregarProdutos(page);
+  }, [page, pageSize]);
 
-  const carregarProdutos = async () => {
+  const carregarProdutos = async (pageParam: number = page) => {
     try {
       setLoading(true);
-      const data = await ProdutoService.listarTodos();
-      setProdutos(data);
+      const filtroPayload: ProdutoFiltroDTO = {
+        ...filtros,
+        page: pageParam,
+        size: pageSize,
+      };
+      const data = await ProdutoService.listarTodos(filtroPayload);
+      setProdutos(data.content);
+      setTotalPages(data.totalPages);
+      setTotalElements(data.totalElements);
     } catch (error) {
       console.error('Erro ao carregar produtos', error);
     } finally {
@@ -36,12 +69,38 @@ export function Produtos() {
     }
   };
 
-  const filteredList = produtos.filter(
-    (p) =>
-      p.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.codigo?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.marca?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFiltros((prev) => ({
+      ...prev,
+      [name]: value === '' ? undefined : value,
+    }));
+  };
+
+  const handleBuscar = () => {
+    setPage(0);
+    carregarProdutos(0);
+  };
+
+  const handleLimpar = () => {
+    setFiltros({
+      nome: '',
+      categoria: undefined,
+      disponivel: undefined,
+      precoMin: undefined,
+      precoMax: undefined,
+    });
+    setPage(0);
+    ProdutoService.listarTodos({ page: 0, size: pageSize }).then((data) => {
+      setProdutos(data.content);
+      setTotalPages(data.totalPages);
+      setTotalElements(data.totalElements);
+    });
+  };
+
+  const filteredList = produtos;
 
   const totalValorEstoque = produtos.reduce(
     (acc, p) => acc + p.precoCusto * p.quantidadeEstoque,
@@ -101,7 +160,7 @@ export function Produtos() {
         await ProdutoService.criar(dto);
       }
 
-      await carregarProdutos();
+      await carregarProdutos(page);
       setIsModalOpen(false);
     } catch (error) {
       alert('Erro ao salvar produto.');
@@ -113,7 +172,7 @@ export function Produtos() {
     if (confirm('Deseja excluir este produto?')) {
       try {
         await ProdutoService.excluir(id);
-        carregarProdutos();
+        carregarProdutos(page);
       } catch (err) {
         alert('Erro ao excluir');
       }
@@ -126,7 +185,7 @@ export function Produtos() {
         <div>
           <h1 className={styles.title}>Estoque de Produtos</h1>
           <p className={styles.subtitle}>
-            {produtos.length} produtos • Valor total:{' '}
+            {totalElements} produtos • Valor total:{' '}
             {formatCurrency(totalValorEstoque)}
           </p>
         </div>
@@ -150,11 +209,76 @@ export function Produtos() {
           <Search className={styles.searchIcon} size={20} />
           <input
             type="text"
-            placeholder="Buscar por nome, marca ou código..."
+            name="nome"
+            placeholder="Buscar por nome..."
             className={styles.searchInput}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            value={filtros.nome || ''}
+            onChange={handleInputChange}
           />
+        </div>
+
+        <div className={styles.filterGroup}>
+          <label className={styles.filterLabel}>Categoria</label>
+          <select
+            name="categoria"
+            className={styles.filterSelect}
+            value={filtros.categoria || ''}
+            onChange={handleInputChange}
+          >
+            <option value="">Todas</option>
+            {Object.values(CategoriaProduto).map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className={styles.filterGroup}>
+          <label className={styles.filterLabel}>Disponível</label>
+          <select
+            name="disponivel"
+            className={styles.filterSelect}
+            value={filtros.disponivel?.toString() || ''}
+            onChange={handleInputChange}
+          >
+            <option value="">Todos</option>
+            <option value="true">Sim</option>
+            <option value="false">Não</option>
+          </select>
+        </div>
+
+        <div className={styles.filterGroup}>
+          <label className={styles.filterLabel}>Preço Min</label>
+          <input
+            type="number"
+            name="precoMin"
+            placeholder="0,00"
+            className={styles.filterInput}
+            value={filtros.precoMin || ''}
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div className={styles.filterGroup}>
+          <label className={styles.filterLabel}>Preço Max</label>
+          <input
+            type="number"
+            name="precoMax"
+            placeholder="0,00"
+            className={styles.filterInput}
+            value={filtros.precoMax || ''}
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div className={styles.filterActions}>
+          <button className={styles.btnClear} onClick={handleLimpar}>
+            <X size={16} /> Limpar
+          </button>
+          <button className={styles.btnSearch} onClick={handleBuscar}>
+            <Search size={16} /> Buscar
+          </button>
         </div>
       </div>
 
@@ -262,6 +386,50 @@ export function Produtos() {
               Nenhum produto encontrado no estoque.
             </div>
           )}
+        </div>
+      )}
+
+      {/* Paginação */}
+      {!loading && filteredList.length > 0 && (
+        <div className={styles.paginationBar}>
+          <div className={styles.paginationControls}>
+            <button
+              className={styles.paginationBtn}
+              onClick={() => setPage((p) => Math.max(0, p - 1))}
+              disabled={page === 0}
+              title="Página Anterior"
+            >
+              <ChevronLeft size={20} />
+            </button>
+
+            <span className={styles.pageInfo}>
+              Página {page + 1} de {totalPages || 1}
+            </span>
+
+            <button
+              className={styles.paginationBtn}
+              onClick={() => setPage((p) => p + 1)}
+              disabled={page >= totalPages - 1}
+              title="Próxima Página"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+
+          <div className={styles.pageSizeSelector}>
+            <label>Itens por página:</label>
+            <select
+              value={pageSize}
+              onChange={(e) => {
+                setPageSize(Number(e.target.value));
+                setPage(0);
+              }}
+            >
+              <option value={10}>10</option>
+              <option value={20}>20</option>
+              <option value={50}>50</option>
+            </select>
+          </div>
         </div>
       )}
 

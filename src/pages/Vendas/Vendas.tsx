@@ -32,7 +32,7 @@ export function Vendas() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const pageSize = 10;
+  const [pageSize, setPageSize] = useState(10);
 
   // --- Estado dos Filtros ---
   const [filtros, setFiltros] = useState<VendaFiltroDTO>({
@@ -46,7 +46,7 @@ export function Vendas() {
   // Carrega vendas ao montar ou trocar de página
   useEffect(() => {
     carregarVendas(page);
-  }, [page]);
+  }, [page, pageSize]);
 
   // Função centralizada de carregamento
   // Aceita pageParam opcional para quando resetamos a página manualmente
@@ -332,27 +332,44 @@ export function Vendas() {
 
           {/* BARRA DE PAGINAÇÃO */}
           <div className={styles.paginationBar}>
-            <button
-              className={styles.paginationBtn}
-              onClick={() => setPage((p) => Math.max(0, p - 1))}
-              disabled={page === 0}
-              title="Página Anterior"
-            >
-              <ChevronLeft size={20} />
-            </button>
+            <div className={styles.paginationControls}>
+              <button
+                className={styles.paginationBtn}
+                onClick={() => setPage((p) => Math.max(0, p - 1))}
+                disabled={page === 0}
+                title="Página Anterior"
+              >
+                <ChevronLeft size={20} />
+              </button>
 
-            <span className={styles.pageInfo}>
-              Página {page + 1} de {totalPages || 1}
-            </span>
+              <span className={styles.pageInfo}>
+                Página {page + 1} de {totalPages || 1}
+              </span>
 
-            <button
-              className={styles.paginationBtn}
-              onClick={() => setPage((p) => p + 1)}
-              disabled={page >= totalPages - 1}
-              title="Próxima Página"
-            >
-              <ChevronRight size={20} />
-            </button>
+              <button
+                className={styles.paginationBtn}
+                onClick={() => setPage((p) => p + 1)}
+                disabled={page >= totalPages - 1}
+                title="Próxima Página"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+
+            <div className={styles.pageSizeSelector}>
+              <label>Itens por página:</label>
+              <select
+                value={pageSize}
+                onChange={(e) => {
+                  setPageSize(Number(e.target.value));
+                  setPage(0);
+                }}
+              >
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+              </select>
+            </div>
           </div>
         </>
       )}

@@ -251,3 +251,158 @@
 .actionBtn:hover {
   color: var(--wood-dark);
 }
+
+/* --- PAGINAÇÃO --- */
+.paginationBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 16px 24px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #eeeeee;
+}
+
+.paginationControls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pageInfo {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.paginationBtn {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #555;
+}
+
+.paginationBtn:hover:not(:disabled) {
+  background-color: #f0f0f0;
+  border-color: #8d6e63;
+  color: #8d6e63;
+}
+
+.paginationBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background-color: #f9f9f9;
+}
+
+.pageSizeSelector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.pageSizeSelector label {
+  font-weight: 500;
+}
+
+.pageSizeSelector select {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  background: white;
+  transition: border-color 0.2s;
+}
+
+.pageSizeSelector select:focus {
+  outline: none;
+  border-color: #8d6e63;
+}
+
+/* --- FILTROS --- */
+.filterBar {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 150px;
+}
+
+.filterLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #666;
+}
+
+.filterInput,
+.filterSelect {
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: white;
+  transition: all 0.2s;
+}
+
+.filterInput:focus,
+.filterSelect:focus {
+  outline: none;
+  border-color: #8d6e63;
+  box-shadow: 0 0 0 3px rgba(141, 110, 99, 0.1);
+}
+
+.filterActions {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.btnSearch,
+.btnClear {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btnSearch {
+  background-color: #333;
+  color: white;
+}
+
+.btnSearch:hover {
+  background-color: #555;
+}
+
+.btnClear {
+  background-color: white;
+  color: #666;
+  border: 1px solid #ddd;
+}
+
+.btnClear:hover {
+  background-color: #f0f0f0;
+}

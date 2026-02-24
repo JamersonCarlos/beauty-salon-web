@@ -243,11 +243,17 @@
 
 .paginationBar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 16px;
   margin-top: 24px;
   padding: 16px;
+}
+
+.paginationControls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .pageInfo {
@@ -280,6 +286,33 @@
   opacity: 0.4;
   cursor: not-allowed;
   background-color: #f9f9f9;
+}
+
+.pageSizeSelector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.pageSizeSelector label {
+  font-weight: 500;
+}
+
+.pageSizeSelector select {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  background: white;
+  transition: border-color 0.2s;
+}
+
+.pageSizeSelector select:focus {
+  outline: none;
+  border-color: #bb8d6a;
 }
 
 .filterBar {
@@ -322,7 +355,8 @@
   color: #666;
 }
 
-.filterInput, .filterSelect {
+.filterInput,
+.filterSelect {
   padding: 8px 12px;
   border: 1px solid #ddd;
   border-radius: 6px;
@@ -331,7 +365,8 @@
   transition: border-color 0.2s;
 }
 
-.filterInput:focus, .filterSelect:focus {
+.filterInput:focus,
+.filterSelect:focus {
   border-color: #bb8d6a;
   outline: none;
 }
@@ -369,8 +404,12 @@
   gap: 6px;
 }
 
-.btnSearch:hover { background-color: #555; }
-.btnClear:hover { background-color: #f0f0f0; }
+.btnSearch:hover {
+  background-color: #555;
+}
+.btnClear:hover {
+  background-color: #f0f0f0;
+}
 
 /* Ajuste responsivo para botão de ação */
 @media (max-width: 768px) {
@@ -378,7 +417,8 @@
     justify-content: stretch;
     flex-direction: row;
   }
-  .btnSearch, .btnClear {
+  .btnSearch,
+  .btnClear {
     flex: 1;
     justify-content: center;
   }

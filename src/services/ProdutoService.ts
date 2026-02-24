@@ -1,6 +1,7 @@
 import { api } from './api';
-import { Produto } from '../models/Produto'; // Certifique-se que o caminho está correto
+import { Produto } from '../models/Produto';
 import type { CategoriaProduto } from '../enums/CategoriaProduto';
+import type { Page } from '../models/Venda';
 
 // DTO para envio de dados (Create/Update) - Sem ID
 export interface ProdutoRequestDTO {
@@ -16,19 +17,48 @@ export interface ProdutoRequestDTO {
   disponivel: boolean;
 }
 
+export interface ProdutoFiltroDTO {
+  nome?: string;
+  categoria?: CategoriaProduto | string;
+  disponivel?: boolean;
+  precoMin?: number;
+  precoMax?: number;
+  page?: number;
+  size?: number;
+}
+
 export const ProdutoService = {
-  
   // --- CREATE (POST) ---
   criar: async (dados: ProdutoRequestDTO): Promise<Produto> => {
     const response = await api.post('/produtos', dados);
     return Produto.fromJson(response.data);
   },
 
-  // --- READ ALL (GET) ---
-  listarTodos: async (): Promise<Produto[]> => {
-    const response = await api.get('/produtos');
-    // Mapeia o array de JSON para array de instâncias da classe Produto
-    return response.data.map((item: any) => Produto.fromJson(item));
+  // --- READ ALL (GET) - Paginado com filtros ---
+  listarTodos: async (
+    filtros: ProdutoFiltroDTO = {}
+  ): Promise<Page<Produto>> => {
+    const params = new URLSearchParams();
+    if (filtros.nome) params.append('nome', filtros.nome);
+    if (filtros.categoria !== undefined)
+      params.append('categoria', filtros.categoria.toString());
+    if (filtros.disponivel !== undefined)
+      params.append('disponivel', filtros.disponivel.toString());
+    if (filtros.precoMin !== undefined)
+      params.append('precoMin', filtros.precoMin.toString());
+    if (filtros.precoMax !== undefined)
+      params.append('precoMax', filtros.precoMax.toString());
+    if (filtros.page !== undefined)
+      params.append('page', filtros.page.toString());
+    if (filtros.size !== undefined)
+      params.append('size', filtros.size.toString());
+
+    const response = await api.get(`/produtos?${params.toString()}`);
+    const pageData = response.data;
+    return {
+      ...pageData,
+      content: pageData.content.map((item: any) => Produto.fromJson(item)),
+    };
   },
 
   // --- READ BY ID (GET) ---
@@ -53,5 +83,5 @@ export const ProdutoService = {
   alternarDisponibilidade: async (id: string): Promise<void> => {
     // A rota no controller é @PatchMapping("/{id}/disponibilidade")
     await api.patch(`/produtos/${id}/disponibilidade`);
-  }
+  },
 };

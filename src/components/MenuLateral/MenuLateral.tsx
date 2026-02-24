@@ -8,6 +8,7 @@ import {
   Sparkles,
   Package,
   ShoppingBag,
+  ShieldCheck,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import styles from './MenuLateral.module.css';
@@ -63,6 +64,16 @@ export function MenuLateral() {
           >
             <Package size={20} className={styles.navIcon} />
             <span>Produtos</span>
+          </NavLink>
+
+          <NavLink
+            to="/auditoria"
+            className={({ isActive }) =>
+              isActive ? `${styles.navItem} ${styles.active}` : styles.navItem
+            }
+          >
+            <ShieldCheck size={20} className={styles.navIcon} />
+            <span>Auditoria</span>
           </NavLink>
 
           <NavLink
