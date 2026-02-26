@@ -1,0 +1,448 @@
+/* =========================================================
+   Galeria.module.css
+   ========================================================= */
+
+/* --- Container principal --- */
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 24px;
+  font-family: 'Lato', sans-serif;
+  min-height: 100vh;
+}
+
+/* --- Cabeçalho da página --- */
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: var(--wood-dark, #4a3b32);
+  margin: 0;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: var(--text-secondary, #9c8681);
+  margin: 4px 0 0 0;
+  font-size: 0.95rem;
+}
+
+.btnNew {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--wood-medium, #8d6e63);
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.15s;
+  box-shadow: 0 4px 12px rgba(141, 110, 99, 0.2);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+.btnNew:hover {
+  background-color: var(--wood-dark, #4a3b32);
+  transform: translateY(-2px);
+}
+
+/* --- Barra de filtros --- */
+.filterBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fdf8f5;
+  border: 1px solid #ede3dc;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.filterGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.filterIcon {
+  color: var(--text-secondary, #9c8681);
+  flex-shrink: 0;
+}
+
+.filterSelect {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1.5px solid #e0d4cc;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #333;
+  background: #fff;
+  cursor: pointer;
+  font-family: 'Lato', sans-serif;
+}
+.filterSelect:focus {
+  outline: none;
+  border-color: var(--wood-medium, #8d6e63);
+}
+
+.btnBuscar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: var(--wood-medium, #8d6e63);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background 0.2s;
+}
+.btnBuscar:hover {
+  background: var(--wood-dark, #4a3b32);
+}
+
+.btnLimpar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: transparent;
+  color: var(--text-secondary, #9c8681);
+  border: 1.5px solid #e0d4cc;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+.btnLimpar:hover {
+  background: #f5ede8;
+  color: var(--wood-dark, #4a3b32);
+}
+
+/* --- Estado vazio / loading --- */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  text-align: center;
+  gap: 12px;
+}
+
+.emptyIcon {
+  color: #d6c4bb;
+}
+
+.emptyText {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--wood-dark, #4a3b32);
+  margin: 0;
+}
+
+.emptyHint {
+  font-size: 0.9rem;
+  color: var(--text-secondary, #9c8681);
+  margin: 0;
+}
+
+/* --- Spinner --- */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e8d9d0;
+  border-top-color: var(--wood-medium, #8d6e63);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   Grid de fotos – estilo Instagram/Pinterest
+   ========================================================= */
+.grid {
+  columns: 4 260px;
+  column-gap: 16px;
+  row-gap: 16px;
+}
+
+/* --- Card individual --- */
+.card {
+  break-inside: avoid;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(74, 59, 50, 0.08);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(74, 59, 50, 0.15);
+}
+
+/* --- Imagem --- */
+.cardImageWrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.cardImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.35s;
+}
+.card:hover .cardImage {
+  transform: scale(1.04);
+}
+
+/* --- Overlay com botão de deletar --- */
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 10px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.card:hover .cardOverlay {
+  opacity: 1;
+}
+
+.btnDelete {
+  background: rgba(255, 255, 255, 0.92);
+  border: none;
+  border-radius: 8px;
+  padding: 7px;
+  cursor: pointer;
+  color: #c62828;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.15s,
+    transform 0.15s;
+}
+.btnDelete:hover {
+  background: #ffebee;
+  transform: scale(1.1);
+}
+
+/* --- Informações do card --- */
+.cardInfo {
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cardTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--wood-dark, #4a3b32);
+  margin: 0;
+  line-height: 1.3;
+  /* Trunca em 2 linhas */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.badgeServico {
+  display: inline-block;
+  background: #f3e9e3;
+  color: var(--wood-medium, #8d6e63);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+  align-self: flex-start;
+  letter-spacing: 0.3px;
+}
+
+.badgeCliente {
+  display: inline-block;
+  background: #e8f5e9;
+  color: #2e7d32;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 20px;
+  align-self: flex-start;
+}
+
+/* --- Paginação --- */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 40px;
+  padding-bottom: 24px;
+}
+
+.pageBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1.5px solid #e0d4cc;
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--wood-dark, #4a3b32);
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+.pageBtn:hover:not(:disabled) {
+  background: #f5ede8;
+  border-color: var(--wood-medium, #8d6e63);
+}
+.pageBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.pageInfo {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #9c8681);
+  font-weight: 600;
+  min-width: 140px;
+  text-align: center;
+}
+
+/* =========================================================
+   Modal de confirmação de exclusão
+   ========================================================= */
+.confirmOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1300;
+  padding: 16px;
+}
+
+.confirmModal {
+  background: #fff;
+  border-radius: 14px;
+  padding: 28px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.confirmTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--wood-dark, #4a3b32);
+  margin: 0 0 10px;
+}
+
+.confirmText {
+  font-size: 0.9rem;
+  color: var(--text-secondary, #6b5b54);
+  margin: 0 0 22px;
+  line-height: 1.6;
+}
+
+.confirmActions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.btnConfirmCancel {
+  padding: 9px 18px;
+  border: 1.5px solid #e0d4cc;
+  background: transparent;
+  color: var(--wood-dark, #4a3b32);
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background 0.15s;
+}
+.btnConfirmCancel:hover {
+  background: #f5ede8;
+}
+
+.btnConfirmDelete {
+  padding: 9px 18px;
+  background: #c62828;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background 0.2s;
+}
+.btnConfirmDelete:hover {
+  background: #b71c1c;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 640px) {
+  .container {
+    padding: 24px 16px;
+  }
+  .title {
+    font-size: 1.5rem;
+  }
+  .grid {
+    columns: 2 140px;
+    column-gap: 10px;
+  }
+  .card {
+    margin-bottom: 10px;
+  }
+  .filterBar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .btnBuscar,
+  .btnLimpar {
+    justify-content: center;
+  }
+}

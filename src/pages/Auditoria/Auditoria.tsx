@@ -87,14 +87,12 @@ export function Auditoria() {
   });
 
   const [logDetalhes, setLogDetalhes] = useState<LogOperacao | null>(null);
-
-  useEffect(() => {
-    carregarLogs(page);
-  }, [page, pageSize]);
+  const [erro, setErro] = useState<string | null>(null);
 
   const carregarLogs = async (pageParam = page) => {
     try {
       setLoading(true);
+      setErro(null);
       const data = await AuditoriaService.listar({
         ...filtros,
         page: pageParam,
@@ -102,15 +100,24 @@ export function Auditoria() {
         sort: 'dataHora',
         direction: 'desc',
       });
-      setLogs(data.content);
-      setTotalPages(data.totalPages);
-      setTotalElements(data.totalElements);
+      setLogs(data.content ?? []);
+      setTotalPages(data.totalPages ?? 0);
+      setTotalElements(data.totalElements ?? 0);
     } catch (err) {
       console.error('Erro ao carregar logs de auditoria', err);
+      setErro(
+        'Não foi possível carregar os logs. Verifique a conexão com o servidor.'
+      );
+      setLogs([]);
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    carregarLogs(page);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -138,16 +145,7 @@ export function Auditoria() {
     };
     setFiltros(limpo);
     setPage(0);
-    AuditoriaService.listar({
-      page: 0,
-      size: pageSize,
-      sort: 'dataHora',
-      direction: 'desc',
-    }).then((data) => {
-      setLogs(data.content);
-      setTotalPages(data.totalPages);
-      setTotalElements(data.totalElements);
-    });
+    carregarLogs(0);
   };
 
   return (
@@ -261,9 +259,21 @@ export function Auditoria() {
       </div>
 
       {/* TABELA */}
+      {erro && (
+        <div className={styles.erroState}>
+          <p>{erro}</p>
+          <button
+            className={styles.btnSearch}
+            onClick={() => carregarLogs(page)}
+          >
+            <Search size={16} /> Tentar novamente
+          </button>
+        </div>
+      )}
+
       {loading ? (
         <p className={styles.loadingText}>Carregando logs...</p>
-      ) : logs.length === 0 ? (
+      ) : erro ? null : logs.length === 0 ? (
         <div className={styles.emptyState}>
           <ShieldCheck size={48} strokeWidth={1} color="#ccc" />
           <p>Nenhum log encontrado para os filtros aplicados.</p>

@@ -10,6 +10,7 @@ import { Vendas } from './pages/Vendas';
 import { Auditoria } from './pages/Auditoria';
 import { Agendamentos } from './pages/Agendamentos';
 import { AgendaFormPage } from './pages/AgendaFormPage';
+import { Galeria } from './pages/Galeria';
 
 // Componente para proteger rotas
 const PrivateRoute = ({ children }: { children: JSX.Element }) => {
@@ -44,6 +45,7 @@ export function AppRoutes() {
         <Route path="agendamentos" element={<Agendamentos />} />
         <Route path="agendamentos/novo" element={<AgendaFormPage />} />
         <Route path="agendamentos/:id/editar" element={<AgendaFormPage />} />
+        <Route path="galeria" element={<Galeria />} />
         <Route path="config" element={<h1>Configurações</h1>} />
       </Route>
     </Routes>

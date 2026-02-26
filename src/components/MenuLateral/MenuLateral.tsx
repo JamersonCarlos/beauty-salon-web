@@ -10,6 +10,7 @@ import {
   ShoppingBag,
   ShieldCheck,
   CalendarDays,
+  Images,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import styles from './MenuLateral.module.css';
@@ -75,6 +76,16 @@ export function MenuLateral() {
           >
             <CalendarDays size={20} className={styles.navIcon} />
             <span>Agendamentos</span>
+          </NavLink>
+
+          <NavLink
+            to="/galeria"
+            className={({ isActive }) =>
+              isActive ? `${styles.navItem} ${styles.active}` : styles.navItem
+            }
+          >
+            <Images size={20} className={styles.navIcon} />
+            <span>Galeria</span>
           </NavLink>
 
           <NavLink
